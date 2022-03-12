@@ -8,34 +8,31 @@ namespace Lantern
     /// </summary>
     public class Clock
     {
+        private TimeParameters time = new Constants.TimeParameters();
+
         /// <summary>
         /// Calculates the number of slots
         /// since genesis time.
         /// </summary>
         public Slot CalculateSlot(int network)
         {
-            ulong timePassed = (ulong)DateTime.UtcNow.Subtract(DateTime.MinValue.AddYears(1969)).TotalMilliseconds;
-            ulong diffInSeconds = (timePassed / 1000) - Constants.TimeParameters.GenesisTime[network];
-            return new Slot(((ulong)Math.Floor((decimal)(diffInSeconds / Constants.TimeParameters.SecondsPerSlot))));
+            ulong timePassed = (ulong)DateTime.UtcNow.Subtract(DateTime.MinValue.AddYears(1969)).TotalSeconds;
+            ulong diffInSeconds = timePassed - time.GenesisTime[network];
+            return new Slot(((ulong)Math.Floor((decimal)(diffInSeconds / time.SecondsPerSlot))));
         }
 
         /// <summary>
         /// Calculates the number of epochs
         /// since genesis time.
         /// </summary>
-        public Epoch CalculateEpochAtSlot(ulong slot)
+        public Epoch CalculateEpoch(int network)
         {
-            return new Epoch(slot / (ulong)Constants.TimeParameters.SlotsPerEpoch);
+            return new Epoch(CalculateSlot(network) / (ulong)time.SlotsPerEpoch);
         }
 
-        public ulong CalculateSyncPeriodAtEpoch(ulong epoch)
+        public ulong CalculateSyncPeriod(int network)
         {
-            return epoch / (ulong)Constants.TimeParameters.EpochsPerSyncCommitteePeriod;
-        }
-
-        public Epoch CalculateRemainingEpochs(int network)
-        {
-            return new Epoch((ulong)Constants.TimeParameters.EpochsPerSyncCommitteePeriod);
+            return (ulong)CalculateEpoch(network) / (ulong)time.EpochsPerSyncCommitteePeriod;
         }
     }
 }

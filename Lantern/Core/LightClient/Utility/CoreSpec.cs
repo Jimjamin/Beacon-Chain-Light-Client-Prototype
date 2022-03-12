@@ -18,10 +18,9 @@ namespace Lantern
         public CoreSpec()
         {
             utility = new LightClientUtility();
-            clock = new Clock();
             storage = new LightClientStore();
             constants = new Constants();
-            time = new TimeParameters();
+            time = new Constants.TimeParameters();
             logging = new Logging();
         }
 
@@ -170,15 +169,12 @@ namespace Lantern
             BeaconBlockHeader activeHeader = GetActiveHeader(update);
             Epoch finalizedPeriod = new Epoch((ulong)Math.Floor((decimal)((ulong)utility.ComputeEpochAtSlot(store.FinalizedHeader.Slot) / time.EpochsPerSyncCommitteePeriod)));
             Epoch updatePeriod = new Epoch((ulong)Math.Floor((decimal)((ulong)utility.ComputeEpochAtSlot(activeHeader.Slot) / time.EpochsPerSyncCommitteePeriod)));
-            if(store.NextSyncCommittee == null)
-            {
-                store.NextSyncCommittee = update.NextSyncCommittee;
-            }
-            else if (updatePeriod == (finalizedPeriod + new Epoch(1)))
+            
+            if (store.NextSyncCommittee != null & updatePeriod == (finalizedPeriod + new Epoch(1)))
             {
                 store.CurrentSyncCommittee = store.NextSyncCommittee;
-                store.NextSyncCommittee = update.NextSyncCommittee;
             }
+            store.NextSyncCommittee = update.NextSyncCommittee;
             store.FinalizedHeader = activeHeader;
             if (store.FinalizedHeader.Slot > store.OptimisticHeader.Slot)
             {
@@ -201,11 +197,6 @@ namespace Lantern
 
                 store.CurrentMaxActiveParticipants = Math.Max(store.CurrentMaxActiveParticipants, updateSyncCommitteeBits);
 
-                if (updateSyncCommitteeBits > GetSafetyThreshold(store) & update.AttestedHeader.Slot > store.OptimisticHeader.Slot)
-                {
-                    store.OptimisticHeader = update.AttestedHeader;
-                }
-
                 if (((updateSyncCommitteeBits * 3) >= update.SyncAggregate.SyncCommitteeBits.Length * 2) & (update.FinalizedHeader != new BeaconBlockHeader(Root.Zero) || update.FinalizedHeader != null))
                 {
                     ApplyLightClientUpdate(store, update);
@@ -214,11 +205,6 @@ namespace Lantern
                 return true;
             }
             return false;                                        
-        }
-
-        public int GetSafetyThreshold(LightClientStore store)
-        {
-            return Math.Max(store.PreviousMaxActiveParticipants, store.CurrentMaxActiveParticipants);
         }
 
         public BeaconBlockHeader GetActiveHeader(LightClientUpdate update)

@@ -48,14 +48,14 @@ namespace Lantern
             currentMaxActiveParticipants = _currentMaxActiveParticipants;
         }
 
-        public BeaconBlockHeader FinalizedHeader { get { return finalizedHeader; } set { finalizedHeader = value; } }
-        public SyncCommittee CurrentSyncCommittee { get { return currentSyncCommittee; } set { currentSyncCommittee = value; } }
-        public SyncCommittee NextSyncCommittee { get { return nextSyncCommittee; } set { nextSyncCommittee = value; } }
-        public LightClientUpdate BestValidUpdate { get { return bestValidUpdate; } set { bestValidUpdate = value; } }
-        public LightClientProofs Proofs { get { return proofs; } set { proofs = value; } }
-        public BeaconBlockHeader OptimisticHeader { get { return optimisticHeader; } set { optimisticHeader = value; } }
-        public int PreviousMaxActiveParticipants { get { return previousMaxActiveParticipants; } set { previousMaxActiveParticipants = value; } }
-        public int CurrentMaxActiveParticipants { get { return currentMaxActiveParticipants; } set { currentMaxActiveParticipants = value; } }
+        public BeaconBlockHeader FinalizedHeader { get; set; }
+        public SyncCommittee CurrentSyncCommittee { get; set; }
+        public SyncCommittee NextSyncCommittee { get; set; }
+        public LightClientUpdate BestValidUpdate { get; set; }
+        public LightClientProofs Proofs { get; set; }
+        public BeaconBlockHeader OptimisticHeader { get; set; }
+        public int PreviousMaxActiveParticipants { get; set; }
+        public int CurrentMaxActiveParticipants { get; set; }
 
 
 

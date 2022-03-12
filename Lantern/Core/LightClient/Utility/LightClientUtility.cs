@@ -20,12 +20,12 @@ namespace Lantern
         }
 
         public Constants Constant;
-        public TimeParameters TimeParameterOptions;
+        public TimeParameters Time;
         public BLSUtility Crypto;
         
         public LightClientUtility()
         {
-            TimeParameterOptions = new TimeParameters();
+            Time = new Constants.TimeParameters();
             Crypto = new BLSUtility();
             Constant = new Constants();
         }
@@ -35,7 +35,7 @@ namespace Lantern
         /// </summary>
         public Epoch ComputeEpochAtSlot(Slot slot)
         {
-            return new Epoch(slot / TimeParameterOptions.SlotsPerEpoch);
+            return new Epoch(slot / Time.SlotsPerEpoch);
         }
 
         /// <summary>

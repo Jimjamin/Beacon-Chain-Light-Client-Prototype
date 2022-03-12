@@ -38,9 +38,9 @@ namespace Lantern
             return array;
         }
 
-        public BeaconBlockHeader FinalizedHeader { get { return finalizedHeader; } set { finalizedHeader = value; } }
-        public SyncCommittee CurrentSyncCommittee { get { return currentSyncCommittee; } set { currentSyncCommittee = value; } }
-        public Root[] CurrentSyncCommitteeBranch { get { return currentSyncCommitteeBranch; } set { currentSyncCommitteeBranch = value; } }
+        public BeaconBlockHeader FinalizedHeader { get; set; }
+        public SyncCommittee CurrentSyncCommittee { get; set; }
+        public Root[] CurrentSyncCommitteeBranch { get; set; }
 
     }
 }

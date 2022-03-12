@@ -54,12 +54,12 @@ namespace Lantern
             return array;
         }
 
-        public BeaconBlockHeader AttestedHeader { get { return attestedHeader; } set { attestedHeader = value; } }
-        public SyncCommittee NextSyncCommittee { get { return nextSyncCommittee; } set { nextSyncCommittee = value; } }
-        public Root[] NextSyncCommitteeBranch { get { return nextSyncCommitteeBranch; } set { nextSyncCommitteeBranch = value; } }
-        public BeaconBlockHeader FinalizedHeader { get { return finalizedHeader; } set { finalizedHeader = value; } }
-        public Root[] FinalityBranch { get { return finalityBranch; } set { finalityBranch = value; } }
-        public SyncAggregate SyncAggregate { get { return syncAggregate; } set { syncAggregate = value; } }
-        public ForkVersion ForkVersion { get { return forkVersion; } set { forkVersion = value; } }
+        public BeaconBlockHeader AttestedHeader { get; set; }
+        public SyncCommittee NextSyncCommittee { get; set; }
+        public Root[] NextSyncCommitteeBranch { get; set; }
+        public BeaconBlockHeader FinalizedHeader { get; set; }
+        public Root[] FinalityBranch { get; set; }
+        public SyncAggregate SyncAggregate { get; set; }
+        public ForkVersion ForkVersion { get; set; }
     }
 }

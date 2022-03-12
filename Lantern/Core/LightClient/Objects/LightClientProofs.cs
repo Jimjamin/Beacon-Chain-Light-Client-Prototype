@@ -26,9 +26,9 @@ namespace Lantern
             balance = _balance;
         }
         
-        public Root Leaf { get { return leaf; } set { leaf = value; } }
-        public List<Root> Proof { get { return proof; } set { proof = value; } }
-        public ulong Gindex { get { return gindex; } set { gindex = value; } }
-        public long Balance { get { return balance; } set { balance = value; } }
+        public Root Leaf { get; set; }
+        public List<Root> Proof { get; set; }
+        public ulong Gindex { get; set; }
+        public long Balance { get; set; }
     }
 }
